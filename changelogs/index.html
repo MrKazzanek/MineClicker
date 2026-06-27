@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelogi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0f14;
+      --bg-card:   #12151e;
+      --bg-hover:  #1a1d2a;
+      --border:    #1f2435;
+      --accent:    #7c3aed;
+      --accent-hi: #a855f7;
+      --accent-glow: rgba(124,58,237,.35);
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --muted-hi:  #94a3b8;
+      --tag-bg:    rgba(124,58,237,.15);
+      --tag-text:  #c4b5fd;
+      --danger:    #ef4444;
+      --warning:   #f59e0b;
+      --success:   #10b981;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ──────────────────────────────────────── */
+    header {
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,15,20,.85);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+    .header-links a {
+      font-size: .8rem; color: var(--muted); text-decoration: none;
+      transition: color .2s;
+      margin-left: 20px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .header-links a:hover { color: var(--text); }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    .hero {
+      max-width: 900px; margin: 0 auto;
+      padding: 72px 24px 48px;
+    }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem; color: var(--accent-hi);
+      letter-spacing: .12em; text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .hero-eyebrow::after {
+      content: ''; flex: 1; max-width: 40px;
+      height: 1px; background: var(--accent);
+      opacity: .5;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      color: var(--muted-hi); max-width: 500px; font-size: .95rem;
+    }
+
+    /* ─── SEARCH + FILTER ─────────────────────────────── */
+    .controls {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 24px 40px;
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .search-wrap {
+      flex: 1; min-width: 220px; position: relative;
+    }
+    .search-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--muted); pointer-events: none;
+    }
+    .search-input {
+      width: 100%; padding: 10px 14px 10px 40px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: .9rem;
+      outline: none; transition: border-color .2s, box-shadow .2s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .filter-btn {
+      padding: 10px 16px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--muted-hi);
+      font-family: 'Inter', sans-serif; font-size: .85rem;
+      cursor: pointer; transition: all .2s; white-space: nowrap;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--accent); color: var(--accent-hi);
+      background: var(--tag-bg);
+    }
+
+    /* ─── TIMELINE ────────────────────────────────────── */
+    .timeline-wrap {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 24px 80px;
+      position: relative;
+    }
+    /* neonowa linia commit tape */
+    .timeline-wrap::before {
+      content: '';
+      position: absolute; left: 24px; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--accent) 5%, var(--accent) 95%, transparent);
+      opacity: .25;
+    }
+
+    .timeline-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .7rem; color: var(--muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin: 32px 0 16px 0;
+      padding-left: 36px;
+      position: relative;
+    }
+
+    .cl-card {
+      display: flex; gap: 20px;
+      margin-bottom: 16px;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+    /* glowing dot na linii */
+    .cl-dot {
+      flex-shrink: 0;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      position: relative; top: 18px;
+      box-shadow: 0 0 8px var(--accent-glow);
+      transition: box-shadow .2s, background .2s;
+      z-index: 2;
+    }
+    .cl-card:hover .cl-dot {
+      background: var(--accent);
+      box-shadow: 0 0 16px var(--accent);
+    }
+    .cl-body {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .cl-card:hover .cl-body {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 0 0 1px var(--accent-glow);
+    }
+    .cl-hero-img {
+      width: 100%; height: 160px; object-fit: cover;
+      display: block;
+    }
+    .cl-hero-placeholder {
+      width: 100%; height: 100px;
+      background: linear-gradient(135deg, #1a1d2a 0%, #0d0f14 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cl-content { padding: 18px 20px 20px; }
+    .cl-meta {
+      display: flex; align-items: center; gap: 10px;
+      flex-wrap: wrap; margin-bottom: 10px;
+    }
+    .cl-version {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .8rem; font-weight: 600;
+      color: var(--accent-hi);
+      background: var(--tag-bg);
+      padding: 2px 8px; border-radius: 4px;
+    }
+    .cl-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem; color: var(--muted);
+    }
+    .cl-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      font-size: .7rem; padding: 2px 7px; border-radius: 4px;
+      font-weight: 500; letter-spacing: .03em;
+    }
+    .tag-fix    { background: rgba(239,68,68,.15);  color: #fca5a5; }
+    .tag-feat   { background: rgba(16,185,129,.15); color: #6ee7b7; }
+    .tag-perf   { background: rgba(245,158,11,.15); color: #fcd34d; }
+    .tag-break  { background: rgba(239,68,68,.25);  color: #f87171; }
+    .tag-patch  { background: rgba(100,116,139,.2); color: #94a3b8; }
+
+    .cl-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem; font-weight: 600;
+      line-height: 1.3; margin-bottom: 6px;
+      color: var(--text);
+    }
+    .cl-excerpt {
+      font-size: .85rem; color: var(--muted-hi);
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    /* ─── EMPTY STATE ─────────────────────────────────── */
+    .empty {
+      text-align: center; padding: 64px 0;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center; padding: 28px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem; color: var(--muted);
+    }
+    footer a { color: var(--accent-hi); text-decoration: none; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 600px) {
+      .timeline-wrap::before { left: 20px; }
+      .header-links { display: none; }
+    }
+
+    /* ─── REDUCED MOTION ──────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .cl-body { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img src="logo.png" alt="Logo" class="main-logo" style="height: 32px; object-fit: contain;" />
+    </a>
+    <nav class="header-links">
+      <a href="../index.html">← Gra</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">changelog</div>
+  <h1>Historia wersji</h1>
+  <p>Wszystkie aktualizacje, poprawki i nowe funkcje posortowane od najnowszych.</p>
+</section>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input class="search-input" id="search" type="search" placeholder="Szukaj wersji, zmian..." autocomplete="off" />
+  </div>
+  <button class="filter-btn active" data-filter="all">Wszystkie</button>
+  <button class="filter-btn" data-filter="feat">Nowe</button>
+  <button class="filter-btn" data-filter="fix">Poprawki</button>
+  <button class="filter-btn" data-filter="perf">Optymalizacje</button>
+  <button class="filter-btn" data-filter="break">Breaking</button>
+</div>
+
+<div class="timeline-wrap" id="timeline"></div>
+
+<footer>
+  Zbudowane z <span style="color:var(--accent)">♥</span>
+</footer>
+
+<script>
+// ─── DANE CHANGELOGÓW ────────────────────────────────────────────────────────
+// Każdy plik changelog powinien eksportować obiekt CHANGELOG_META do window.
+// Tutaj lista plików do załadowania — dodaj nową wersję tutaj.
+// Alternatywnie: wygeneruj changelogs-data.js narzędziem generator.html
+
+const CHANGELOG_FILES = [
+  /* przykład ładowania metadanych inline (gdy nie masz serwera HTTP):
+     { file: '1.2.0.html', meta: { ... } }
+     Możesz też użyć changelogs-data.js */
+];
+
+// ─── ŁADOWANIE changelogs-data.js (główna metoda) ───────────────────────────
+async function loadData() {
+  // Spróbuj załadować centralny plik danych
+  try {
+    const resp = await fetch('changelogs-data.js?' + Date.now());
+    if (resp.ok) {
+      const text = await resp.text();
+      // bezpieczne wykonanie
+      const fn = new Function(text + '\nreturn typeof CHANGELOGS_DATA !== "undefined" ? CHANGELOGS_DATA : [];');
+      return fn();
+    }
+  } catch(e) {}
+
+  // Fallback: dane wbudowane
+  return CHANGELOG_FILES.map(f => f.meta ? { ...f.meta, file: f.file } : null).filter(Boolean);
+}
+
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+let allEntries = [];
+let activeFilter = 'all';
+
+function tagBadge(tag) {
+  const map = { fix:'Poprawka', feat:'Nowość', perf:'Wydajność', break:'Breaking', patch:'Patch' };
+  return `<span class="tag tag-${tag}">${map[tag]||tag}</span>`;
+}
+
+function cardHTML(entry) {
+  const tags = (entry.tags||[]).map(tagBadge).join('');
+  const img = entry.heroImage
+    ? `<img class="cl-hero-img" src="${entry.heroImage}" alt="" loading="lazy" />`
+    : '';
+
+  return `
+  <a class="cl-card" href="${entry.file}" data-tags="${(entry.tags||[]).join(' ')}"
+     data-title="${(entry.title||'').toLowerCase()}" data-version="${(entry.version||'').toLowerCase()}"
+     data-excerpt="${(entry.excerpt||'').toLowerCase()}">
+    <div class="cl-dot"></div>
+    <div class="cl-body">
+      ${img}
+      <div class="cl-content">
+        <div class="cl-meta">
+          <span class="cl-version">v${entry.version}</span>
+          <span class="cl-date">${entry.date}</span>
+          <div class="cl-tags">${tags}</div>
+        </div>
+        <div class="cl-title">${entry.title || 'Aktualizacja v'+entry.version}</div>
+        ${entry.excerpt ? `<div class="cl-excerpt">${entry.excerpt}</div>` : ''}
+      </div>
+    </div>
+  </a>`;
+}
+
+function groupByYear(entries) {
+  const groups = {};
+  entries.forEach(e => {
+    const y = e.date ? e.date.split('-')[0] : 'Nieznany rok';
+    if (!groups[y]) groups[y] = [];
+    groups[y].push(e);
+  });
+  return groups;
+}
+
+function render(entries) {
+  const tl = document.getElementById('timeline');
+  if (!entries.length) {
+    tl.innerHTML = `<div class="empty"><div class="empty-icon">📭</div>Brak changelogów spełniających kryteria.</div>`;
+    return;
+  }
+  const groups = groupByYear(entries);
+  const years = Object.keys(groups).sort((a,b) => b-a);
+  tl.innerHTML = years.map(y =>
+    `<div class="timeline-year">${y}</div>` +
+    groups[y].map(cardHTML).join('')
+  ).join('');
+}
+
+function applyFilters() {
+  const q = document.getElementById('search').value.toLowerCase();
+  let filtered = allEntries.filter(e => {
+    const matchFilter = activeFilter === 'all' || (e.tags||[]).includes(activeFilter);
+    const matchSearch = !q ||
+      (e.title||'').toLowerCase().includes(q) ||
+      (e.version||'').toLowerCase().includes(q) ||
+      (e.excerpt||'').toLowerCase().includes(q) ||
+      (e.tags||[]).join(' ').includes(q);
+    return matchFilter && matchSearch;
+  });
+  render(filtered);
+}
+
+// ─── KONTROLKI ──────────────────────────────────────────────────────────────
+document.getElementById('search').addEventListener('input', applyFilters);
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    applyFilters();
+  });
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+(async () => {
+  const data = await loadData();
+  // sortuj od najnowszych
+  allEntries = data.sort((a, b) => {
+    const da = new Date(a.date||0), db = new Date(b.date||0);
+    if (db - da !== 0) return db - da;
+    // semver fallback
+    const va = (a.version||'').split('.').map(Number);
+    const vb = (b.version||'').split('.').map(Number);
+    for (let i=0;i<3;i++) if ((vb[i]||0)!==(va[i]||0)) return (vb[i]||0)-(va[i]||0);
+    return 0;
+  });
+
+  if (!allEntries.length) {
+    document.getElementById('timeline').innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">🚀</div>
+        Nie ma jeszcze żadnych changelogów.
+      </div>`;
+  } else {
+    render(allEntries);
+  }
+})();
+</script>
+</body>
+</html>
