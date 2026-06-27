@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>v1.2.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="changelog-style.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img src="logo.png" alt="Logo" class="main-logo" style="height: 32px; object-fit: contain;" />
+    </a>
+    <a href="index.html" class="back-link">← Wszystkie changelogi</a>
+  </div>
+</header>
+
+<!-- Brak hero image — wyświetla placeholder z numerem wersji -->
+<div class="hero-gradient">
+  <div class="hero-gradient-inner">v1.2.0</div>
+</div>
+
+<article>
+
+  <div class="article-meta">
+    <span class="art-version">v1.2.0</span>
+    <span class="art-date">2024-11-15</span>
+    <span class="tag tag-feat">Nowość</span>
+    <span class="tag tag-fix">Poprawka</span>
+    <span class="tag tag-perf">Wydajność</span>
+  </div>
+
+  <h1 class="article-title">Wielka Aktualizacja Mapy</h1>
+  <p class="article-excerpt">
+    Przeprojektowaliśmy system generowania mapy od podstaw, dodaliśmy nowe biomy,
+    naprawiliśmy ponad 30 błędów i znacząco zoptymalizowaliśmy renderowanie terenu.
+  </p>
+
+  <div class="cl-content">
+
+    <h2>Nowe funkcje</h2>
+
+    <div class="change-block feat">
+      <div class="cb-label">NOWOŚĆ</div>
+      <p>Proceduralny generator biomów — mapa teraz zawiera lasy, pustynie, bagna i tereny lodowe.
+         Każda nowa gra generuje unikalny świat z innym rozmieszczeniem biomów.</p>
+    </div>
+
+    <div class="change-block feat">
+      <div class="cb-label">NOWOŚĆ</div>
+      <p>System pogody w czasie rzeczywistym. Deszcz, mgła i burze wpływają teraz na widoczność
+         i przemieszczanie się jednostek po mapie.</p>
+    </div>
+
+    <div class="change-block feat">
+      <div class="cb-label">NOWOŚĆ</div>
+      <p>Tryb kooperacji dla 2 graczy w trybie lokalnym (split-screen). Współpraca w jednym
+         pliku zapisu, wspólny ekwipunek.</p>
+    </div>
+
+    <h2>Zmiany w systemie walki</h2>
+
+    <p>Całkowicie przebudowaliśmy mechanikę obrażeń — teraz każdy typ broni ma unikalne
+    współczynniki i specjalne ataki krytyczne.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Typ broni</th>
+          <th>Obrażenia bazowe</th>
+          <th>Szybkość ataku</th>
+          <th>Atak krytyczny</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Miecz jednoręczny</td><td>45–60</td><td>1.2/s</td><td>×1.8</td></tr>
+        <tr><td>Topór dwuręczny</td><td>90–130</td><td>0.6/s</td><td>×2.5</td></tr>
+        <tr><td>Sztylet</td><td>20–35</td><td>2.4/s</td><td>×3.0</td></tr>
+        <tr><td>Łuk</td><td>55–75</td><td>0.9/s</td><td>×2.0</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Poprawki błędów</h2>
+
+    <ul>
+      <li>Naprawiono crash przy wejściu do lochu w warstwie 4 gdy ekwipunek był pełny</li>
+      <li>Naprawiono błąd gdzie NPC Kowal sprzedawał przedmioty ze złą ceną po przeładowaniu zapisu</li>
+      <li>Naprawiono przenikanie przez tekstury w jaskini Smoczego Grzbietu</li>
+      <li>Naprawiono zawieszanie się gry przy szybkim przełączaniu między ekwipunkiem a mapą</li>
+      <li>Naprawiono brakujące dźwięki ambientalne w biomie bagnistym</li>
+      <li>Naprawiono nieprawidłowe obliczanie statystyk po nałożeniu efektu trucizny i leczenia równocześnie</li>
+    </ul>
+
+    <h2>Optymalizacje</h2>
+
+    <div class="change-block perf">
+      <div class="cb-label">WYDAJNOŚĆ</div>
+      <p>Renderowanie terenu przyspieszyło o ~40% dzięki przejściu na chunked LOD system.
+         Gra teraz lepiej działa na słabszym sprzęcie.</p>
+    </div>
+
+    <div class="change-block perf">
+      <div class="cb-label">WYDAJNOŚĆ</div>
+      <p>Zużycie pamięci RAM zmniejszone o ok. 25% przez lepsze zarządzanie assetami.
+         Czas ładowania mapy skrócony z ~8s do ~3s.</p>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">⚠️</span>
+      <p>Stare zapisy gry z wersji 1.1.x są kompatybilne, jednak wczytanie ich spowoduje
+         ponowne wygenerowanie już odkrytych obszarów mapy ze względu na nowy system biomów.</p>
+    </div>
+
+    <h2>Instrukcja aktualizacji</h2>
+
+    <p>Aktualizacja odbywa się automatycznie przez launcher. Jeśli korzystasz z wersji Steam:</p>
+
+    <pre><code>-- Upewnij się że masz wyłączone auto-aktualizacje innych gier
+-- Kliknij prawym na grę → Właściwości → Aktualizacje
+-- Wybierz "Zawsze aktualizuj tę grę"
+-- Uruchom Steam i poczekaj na pobranie v1.2.0</code></pre>
+
+    <hr />
+
+    <div class="change-block break">
+      <div class="cb-label">BREAKING — MODYFIKACJE</div>
+      <p>API dla modów zmieniło się w tym wydaniu. Mody korzystające z <code>MapGen.legacy</code>
+         muszą zostać zaktualizowane do nowego <code>MapGen.v2</code>. Szczegółowe zmiany
+         w dokumentacji modderów.</p>
+    </div>
+
+  </div>
+
+  <nav class="version-nav">
+    <a class="ver-btn prev" href="1.1.0.html">
+      <span class="vb-label">← Poprzednia</span>
+      <span class="vb-ver">v1.1.0</span>
+    </a>
+    <a class="ver-btn next" href="1.3.0.html">
+      <span class="vb-label">Następna →</span>
+      <span class="vb-ver">v1.3.0</span>
+    </a>
+  </nav>
+
+</article>
+
+<footer>
+  <a href="index.html">← Wszystkie changelogi</a>
+</footer>
+
+</body>
+</html>
