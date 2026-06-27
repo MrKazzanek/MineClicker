@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelogi</title>
+  <title>Minecraft Clicker - Changelogs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
@@ -281,15 +281,15 @@
       <img src="logo.png" alt="Logo" class="main-logo" style="height: 32px; object-fit: contain;" />
     </a>
     <nav class="header-links">
-      <a href="../index.html">← Gra</a>
+      <a href="../index.html">← Back</a>
     </nav>
   </div>
 </header>
 
 <section class="hero">
-  <div class="hero-eyebrow">changelog</div>
-  <h1>Historia wersji</h1>
-  <p>Wszystkie aktualizacje, poprawki i nowe funkcje posortowane od najnowszych.</p>
+  <div class="hero-eyebrow">changelogs</div>
+  <h1>Minecraft Clicker</h1>
+  <p>See what's new in the world of Minecraft Clicker.</p>
 </section>
 
 <div class="controls">
@@ -297,19 +297,19 @@
     <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
     </svg>
-    <input class="search-input" id="search" type="search" placeholder="Szukaj wersji, zmian..." autocomplete="off" />
+    <input class="search-input" id="search" type="search" placeholder="Search versions, changes..." autocomplete="off" />
   </div>
-  <button class="filter-btn active" data-filter="all">Wszystkie</button>
-  <button class="filter-btn" data-filter="feat">Nowe</button>
-  <button class="filter-btn" data-filter="fix">Poprawki</button>
-  <button class="filter-btn" data-filter="perf">Optymalizacje</button>
-  <button class="filter-btn" data-filter="break">Breaking</button>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="feat">News</button>
+  <button class="filter-btn" data-filter="fix">Bug Fixes</button>
+  <button class="filter-btn" data-filter="perf">Performance</button>
+  <button class="filter-btn" data-filter="break">Important</button>
 </div>
 
 <div class="timeline-wrap" id="timeline"></div>
 
 <footer>
-  Zbudowane z <span style="color:var(--accent)">♥</span>
+  © 2026 QozaWorks. All rights reserved.
 </footer>
 
 <script>
@@ -346,7 +346,7 @@ let allEntries = [];
 let activeFilter = 'all';
 
 function tagBadge(tag) {
-  const map = { fix:'Poprawka', feat:'Nowość', perf:'Wydajność', break:'Breaking', patch:'Patch' };
+  const map = { fix:'Bug Fixes', feat:'News', perf:'Performance', break:'Important', patch:'Patch' };
   return `<span class="tag tag-${tag}">${map[tag]||tag}</span>`;
 }
 
@@ -369,7 +369,7 @@ function cardHTML(entry) {
           <span class="cl-date">${entry.date}</span>
           <div class="cl-tags">${tags}</div>
         </div>
-        <div class="cl-title">${entry.title || 'Aktualizacja v'+entry.version}</div>
+        <div class="cl-title">${entry.title || 'Update v'+entry.version}</div>
         ${entry.excerpt ? `<div class="cl-excerpt">${entry.excerpt}</div>` : ''}
       </div>
     </div>
@@ -389,7 +389,7 @@ function groupByYear(entries) {
 function render(entries) {
   const tl = document.getElementById('timeline');
   if (!entries.length) {
-    tl.innerHTML = `<div class="empty"><div class="empty-icon">📭</div>Brak changelogów spełniających kryteria.</div>`;
+    tl.innerHTML = `<div class="empty"><div class="empty-icon">:/</div>Nothing found.</div>`;
     return;
   }
   const groups = groupByYear(entries);
@@ -442,8 +442,8 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   if (!allEntries.length) {
     document.getElementById('timeline').innerHTML = `
       <div class="empty">
-        <div class="empty-icon">🚀</div>
-        Nie ma jeszcze żadnych changelogów.
+        <div class="empty-icon">:(</div>
+        No changelogs yet.
       </div>`;
   } else {
     render(allEntries);
