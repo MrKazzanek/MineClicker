@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>v{{VERSION}}</title>
+  <title>Minecraft Clicker - {{VERSION}}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
@@ -263,7 +263,7 @@
       <img src="logo.png" alt="Logo" class="main-logo" style="height: 32px; object-fit: contain;" />
     </a>
     <a href="index.html" class="back-link">
-      ← Wszystkie changelogi
+      ← All Changelogs
     </a>
   </div>
 </header>
@@ -278,8 +278,8 @@
     <!-- generator wstawi wersję, datę, tagi -->
   </div>
 
-  <h1 class="article-title" id="article-title">Tytuł aktualizacji</h1>
-  <p class="article-excerpt" id="article-excerpt">Krótki opis tej aktualizacji.</p>
+  <h1 class="article-title" id="article-title">Update Name</h1>
+  <p class="article-excerpt" id="article-excerpt">A short description of this update.</p>
 
   <div class="cl-content" id="cl-content">
     <!-- TREŚĆ CHANGELOGU — pisz tu normalnie -->
@@ -291,7 +291,7 @@
 </article>
 
 <footer>
-  <a href="index.html">← Wszystkie changelogi</a>
+  <a href="index.html">← All Changelogs</a>
 </footer>
 
 <script>
@@ -320,7 +320,7 @@ const CHANGELOG_META = {
   }
 
   // meta bar
-  const tagMap = {fix:'Poprawka',feat:'Nowość',perf:'Wydajność',break:'Breaking',patch:'Patch'};
+  const tagMap = {fix:'Bug Fixes',feat:'News',perf:'Performance',break:'Important',patch:'Patch'};
   const tags = (m.tags||[]).map(t=>`<span class="tag tag-${t}">${tagMap[t]||t}</span>`).join('');
   document.getElementById('article-meta').innerHTML =
     `<span class="art-version">v${m.version}</span>
