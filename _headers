@@ -1,8 +1,0 @@
-*.wasm
-  Cache-Control: no-cache
-
-*.pck
-  Cache-Control: no-cache
-
-*.js
-  Cache-Control: no-cache
