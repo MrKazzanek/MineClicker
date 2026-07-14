@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1783784721|8830305474';
+const CACHE_VERSION = '1783936475|3875552583';
 /** @type {string} */
 const CACHE_PREFIX = 'Minecraft Clicke-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
